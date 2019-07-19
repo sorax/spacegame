@@ -1,6 +1,8 @@
 defmodule SpacegameWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :spacegame
 
+  socket "/live", Phoenix.LiveView.Socket
+
   socket "/socket", SpacegameWeb.UserSocket,
     websocket: true,
     longpoll: false
