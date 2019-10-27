@@ -1,35 +1,26 @@
-<section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
+<section id="banner">
+  <div class="jumbotron">
+    <h1 class="display-4">Building a Spacegame!</h1>
+    <p class="lead">We try to build a multiplayer game from ground up. Lets see how far we get along our way.</p>
+  </div>
 </section>
-
-<section class="row">
-  <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.4/CHANGELOG.md">v1.4 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-    </ul>
-  </article>
+<section class="games">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+      <h2>Examples and test cases for exploring the way foreward</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">EyeBallPaul</h5>
+            <p class="card-text">A first start and interactive playground for our (incremental growing) spacegame.<br />If we need further experiments other mini-games may follow.</p>
+            <%= link("EyeBallPaul", to: "/eyeballpaul", class: "card-link") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
