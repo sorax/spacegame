@@ -12,7 +12,8 @@ defmodule SpacegameWeb.GameLive do
     PageView.render("ship.html", assigns)
   end
 
-  # def handle_event("test", _value, socket) do
-  #   {:noreply, socket}
-  # end
+  def handle_event("test", _value, socket) do
+    IO.puts("handle_event: test")
+    {:noreply, socket}
+  end
 end
