@@ -4,4 +4,8 @@ defmodule SpacegameWeb.PageController do
   def index(conn, _params) do
     render(conn, "index.html")
   end
+
+  def eyeballpaul(conn, _params) do
+    render(conn, "eyeballpaul.html")
+  end
 end

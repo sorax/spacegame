@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row">
+    <h1>EyeBallPaul</h1>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <%= live_render(@conn, SpacegameWeb.GameLive) %>
+  </div>
+</div>

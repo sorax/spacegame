@@ -18,6 +18,7 @@ defmodule SpacegameWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/eyeballpaul", PageController, :eyeballpaul
   end
 
   # Other scopes may use custom stacks.
