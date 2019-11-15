@@ -1,11 +1,11 @@
 defmodule SpacegameWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :spacegame
 
-  socket "/live", Phoenix.LiveView.Socket
-
   socket "/socket", SpacegameWeb.UserSocket,
     websocket: true,
     longpoll: false
+
+  socket "/live", Phoenix.LiveView.Socket
 
   # Serve at "/" the static files from "priv/static" directory.
   #

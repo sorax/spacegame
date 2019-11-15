@@ -60,9 +60,8 @@ config :spacegame, SpacegameWeb.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/spacegame_web/views/.*(ex)$",
-      ~r"lib/spacegame_web/templates/.*(eex)$",
-      ~r"lib/spacegame_web/live/.*(ex)$"
+      ~r"lib/spacegame_web/{live,views}/.*(ex)$",
+      ~r"lib/spacegame_web/templates/.*(eex)$"
     ]
   ]
 
