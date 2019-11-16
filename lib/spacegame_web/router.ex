@@ -19,6 +19,8 @@ defmodule SpacegameWeb.Router do
 
     get "/", PageController, :index
     get "/eyeballpaul", PageController, :eyeballpaul
+
+    # live "/eyeballpaul-live", GameLive
   end
 
   # Other scopes may use custom stacks.

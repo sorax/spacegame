@@ -18,6 +18,7 @@
             <h5 class="card-title">EyeBallPaul</h5>
             <p class="card-text">A first start and interactive playground for our (incremental growing) spacegame.<br />If we need further experiments other mini-games may follow.</p>
             <%= link("EyeBallPaul", to: "/eyeballpaul", class: "card-link") %>
+            <%= # link("LIVE", to: "/eyeballpaul-live", class: "card-link") %>
           </div>
         </div>
       </div>

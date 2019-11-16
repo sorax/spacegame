@@ -1,10 +1,19 @@
 <div class="container">
   <div class="row">
-    <h1>EyeBallPaul</h1>
+    <div class="col-12">
+      <h1>EyeBallPaul</h1>
+    </div>
   </div>
 </div>
 <div class="container">
   <div class="row">
-    <%= live_render(@conn, SpacegameWeb.GameLive) %>
+    <div class="col-12">
+      <%= live_render(@conn, SpacegameWeb.EyeBallPaulGameLive) %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <%= live_render(@conn, SpacegameWeb.EyeBallPaulControllerLive) %>
+    </div>
   </div>
 </div>
