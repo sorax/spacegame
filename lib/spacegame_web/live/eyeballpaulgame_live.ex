@@ -4,6 +4,10 @@ defmodule SpacegameWeb.EyeBallPaulGameLive do
   alias SpacegameWeb.PageView
 
   def mount(_session, socket) do
+    socket =
+      socket
+      |> assign(%{ball: %{x: 100, y: 100}})
+
     {:ok, socket}
   end
 
@@ -12,9 +16,4 @@ defmodule SpacegameWeb.EyeBallPaulGameLive do
 
     PageView.render("eyeballpaulgame.html", assigns)
   end
-
-  # def handle_event("test", _value, socket) do
-  #   IO.puts("handle_event: test")
-  #   {:noreply, socket}
-  # end
 end
