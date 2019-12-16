@@ -1,0 +1,19 @@
+<svg width="300" height="300">
+  <g transform="translate(150 150)">
+    <rect x="-150" y="-150" width="300" height="300" style="fill:white;stroke:gray;stroke-width:1" />
+    <circle cx="0" cy="0" r="100" style="fill:none;stroke:gray;stroke-width:1" />      
+    <circle cx="<%= @ball.x %>" cy="<%= @ball.y %>" r="25" fill="rgb(255,66,0)" />
+    <g transform="rotate(<%= @paddle.deg %>)">
+      <!--<path d="M 0 -100 A 100 100 0 0 1 100 0" style="fill:none;stroke:rgb(255,66,0);stroke-width:30;stroke-linecap:round" />-->
+      <path d="<%= @paddle.d %>" style="fill:none;stroke:rgb(255,66,0);stroke-width:30;stroke-linecap:round" />
+      <path id="arc1" fill="none" stroke="#446688" stroke-width="20" />
+
+    </g>
+  </g>
+</svg>
+<%=
+  # rgb(0,176,111)
+  # rgb(255,66,0)
+
+ @paddle.d
+%>

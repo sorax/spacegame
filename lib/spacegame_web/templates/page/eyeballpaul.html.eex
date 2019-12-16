@@ -8,12 +8,12 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <%= live_render(@conn, SpacegameWeb.EyeBallPaulGameLive) %>
+      <iframe src="/eyeballpaul/observer"></iframe>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
-      <%= live_render(@conn, SpacegameWeb.EyeBallPaulControllerLive) %>
+      <iframe src="/eyeballpaul/controller"></iframe>
     </div>
   </div>
 </div>

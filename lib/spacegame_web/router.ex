@@ -20,7 +20,8 @@ defmodule SpacegameWeb.Router do
     get "/", PageController, :index
     get "/eyeballpaul", PageController, :eyeballpaul
 
-    # live "/eyeballpaul-live", GameLive
+    live "/eyeballpaul/observer", EyeBallPaulObserverLive
+    live "/eyeballpaul/controller", EyeBallPaulControllerLive
   end
 
   # Other scopes may use custom stacks.
