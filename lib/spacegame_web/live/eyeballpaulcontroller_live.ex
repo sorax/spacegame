@@ -16,7 +16,8 @@ defmodule SpacegameWeb.EyeBallPaulControllerLive do
     PageView.render("eyeballpaulcontroller.html", assigns)
   end
 
-  def handle_event("setDeg", %{"value" => value}, socket) do
-    {:noreply, assign(socket, deg: value |> String.to_integer())}
+  def handle_event("set_deg", %{"controller" => %{"deg" => deg}}, socket) do
+    # send(self(), {__MODULE__, :updated_title, %{title: updated_title}})
+    {:noreply, socket}
   end
 end

@@ -1,1 +1,3 @@
-<input id="controller-deg" class="team<%= @team_id %>" type="range" min="0" max="360" step="1" value="<%= @deg %>" phx-click="setDeg" phx-value="<%= @deg %>" />
+<%= f = form_for :controller, "#", [phx_change: :set_deg] %>
+  <%= range_input f, :deg, [class: "team#{@team_id}", min: 0, max: 360, step: 1] %>
+</form>
