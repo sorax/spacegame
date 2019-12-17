@@ -2,6 +2,7 @@ defmodule SpacegameWeb.EyeBallPaulControllerLive do
   use Phoenix.LiveView
 
   alias SpacegameWeb.PageView
+  alias Spacegame.Chat
 
   def mount(_session, socket) do
     socket =
@@ -17,7 +18,14 @@ defmodule SpacegameWeb.EyeBallPaulControllerLive do
   end
 
   def handle_event("set_deg", %{"controller" => %{"deg" => deg}}, socket) do
-    # send(self(), {__MODULE__, :updated_title, %{title: updated_title}})
+    Chat.create_message(deg)
+
     {:noreply, socket}
+  end
+
+  def handle_info({Chat, [:message, _event_type], _message}, socket) do
+    assign(socket, %{
+      messages: Chat.list_messages()
+    })
   end
 end
