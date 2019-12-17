@@ -1,60 +1,70 @@
-#controller_deg {
-  & {
-    width: 100%;
-    -webkit-appearance: none;
-  }
+#controller {
+  height: 100vh;
 
-  &:focus {
-    outline: none;
-  }
+  #controller_form {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 
-  &::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 10vh;
-    cursor: pointer;
-    background: rgb(45, 47, 49);
-  }
+    #controller_deg {
+      & {
+        width: 100%;
+        -webkit-appearance: none;
+      }
 
-  &::-webkit-slider-thumb {
-    height: 20vh;
-    width: 20vh;
-    border-radius: 100%;
-    background: rgb(255, 255, 255);
-    cursor: pointer;
-    -webkit-appearance: none;
-    margin-top: -5vh;
-  }
+      &:focus {
+        outline: none;
+      }
 
-  &.team1::-webkit-slider-thumb {
-    background: rgb(0, 176, 111);
-  }
-  &.team2::-webkit-slider-thumb {
-    background: rgb(255, 66, 0);
-  }
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 10vh;
+        cursor: pointer;
+        background: rgb(45, 47, 49);
+      }
 
-  &:focus::-webkit-slider-runnable-track {
-    background: rgb(45, 47, 49);
-  }
+      &::-webkit-slider-thumb {
+        height: 20vh;
+        width: 20vh;
+        border-radius: 100%;
+        background: rgb(255, 255, 255);
+        cursor: pointer;
+        -webkit-appearance: none;
+        margin-top: -5vh;
+      }
 
-  &::-moz-range-track {
-    width: 100%;
-    height: 10vh;
-    cursor: pointer;
-    background: rgb(45, 47, 49);
-  }
+      &.team1::-webkit-slider-thumb {
+        background: rgb(0, 176, 111);
+      }
+      &.team2::-webkit-slider-thumb {
+        background: rgb(255, 66, 0);
+      }
 
-  &::-moz-range-thumb {
-    height: 20vh;
-    width: 20vh;
-    border-radius: 100%;
-    background: rgb(255, 255, 255);
-    cursor: pointer;
-  }
+      &:focus::-webkit-slider-runnable-track {
+        background: rgb(45, 47, 49);
+      }
 
-  &.team1::-moz-range-thumb {
-    background: rgb(0, 176, 111);
-  }
-  &.team2::-moz-range-thumb {
-    background: rgb(255, 66, 0);
+      &::-moz-range-track {
+        width: 100%;
+        height: 10vh;
+        cursor: pointer;
+        background: rgb(45, 47, 49);
+      }
+
+      &::-moz-range-thumb {
+        height: 20vh;
+        width: 20vh;
+        border-radius: 100%;
+        background: rgb(255, 255, 255);
+        cursor: pointer;
+      }
+
+      &.team1::-moz-range-thumb {
+        background: rgb(0, 176, 111);
+      }
+      &.team2::-moz-range-thumb {
+        background: rgb(255, 66, 0);
+      }
+    }
   }
 }
