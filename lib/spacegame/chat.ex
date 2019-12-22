@@ -108,8 +108,8 @@ defmodule Spacegame.Chat do
       %Ecto.Changeset{source: %Message{}}
 
   """
-  def change_message(%Message{} = message) do
-    Message.changeset(message, %{})
+  def change_message(%Message{} = message, attrs \\ %{}) do
+    Message.changeset(message, attrs)
   end
 
   defp notify_subs({:ok, result}, event) do

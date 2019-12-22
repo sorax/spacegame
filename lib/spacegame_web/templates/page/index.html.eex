@@ -17,8 +17,16 @@
           <div class="card-body">
             <h5 class="card-title">EyeBallPaul</h5>
             <p class="card-text">A first start and interactive playground for our (incremental growing) spacegame.<br />If we need further experiments other mini-games may follow.</p>
-            <%= link("EyeBallPaul", to: "/eyeballpaul", class: "card-link") %>
-            <%= # link("LIVE", to: "/eyeballpaul-live", class: "card-link") %>
+            <%= link("EyeBallPaul", to: "/eyeballpaul", class: "card-link") %>            
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Chat & Messaging</h5>
+            <p class="card-text">The second part is about messaging.<br />So "messaging" is just a chat with deplay but you will need an inbox and a history.</p>
+            <%= link("Chat", to: "/chat", class: "card-link") %>
           </div>
         </div>
       </div>

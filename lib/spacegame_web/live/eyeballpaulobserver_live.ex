@@ -2,8 +2,11 @@ defmodule SpacegameWeb.EyeBallPaulObserverLive do
   use Phoenix.LiveView
 
   alias SpacegameWeb.PageView
+  alias Spacegame.Chat
 
   def mount(_session, socket) do
+    if connected?(socket), do: Chat.subscribe()
+
     socket =
       socket
       |> assign(%{
@@ -21,6 +24,12 @@ defmodule SpacegameWeb.EyeBallPaulObserverLive do
     # ~L"Rendering LiveView"
 
     PageView.render("eyeballpaulobserver.html", assigns)
+  end
+
+  def handle_info({Chat, :set_deg, deg}, socket) do
+    IO.inspect("handle_info: set_deg")
+    IO.inspect(deg)
+    {:noreply, socket}
   end
 
   def get_paddle(deg, width, player) do

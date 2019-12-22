@@ -22,6 +22,7 @@ defmodule SpacegameWeb.Router do
 
     live "/eyeballpaul/observer", EyeBallPaulObserverLive
     live "/eyeballpaul/controller", EyeBallPaulControllerLive
+    live "/chat", ChatLive
   end
 
   # Other scopes may use custom stacks.
