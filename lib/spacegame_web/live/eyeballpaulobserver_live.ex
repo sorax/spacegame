@@ -2,20 +2,37 @@ defmodule SpacegameWeb.EyeBallPaulObserverLive do
   use Phoenix.LiveView
 
   alias SpacegameWeb.PageView
+
   alias Spacegame.Chat
+  alias Phoenix.PubSub
 
   def mount(_session, socket) do
-    if connected?(socket), do: Chat.subscribe()
+    if connected?(socket), do: PubSub.subscribe(Spacegame.PubSub, "EyeBallPaulObserver")
 
     socket =
       socket
       |> assign(%{
         ball: %{x: 0, y: 0},
-        paddles: [
-          get_paddle(90, 20, 1),
-          get_paddle(270, 20, 2)
-        ]
+        paddles: []
       })
+
+    # Counter.start_link(0)
+    # # => {:ok, #PID<0.123.0>}
+
+    # Counter.value()
+    # # => 0
+
+    # Counter.increment()
+    # # => :ok
+
+    # Counter.increment()
+    # # => :ok
+
+    # Counter.value()
+
+    :timer.apply_interval(1000, SpacegameWeb.EyeBallPaulObserverLive, :set_ball_pos, [
+      socket
+    ])
 
     {:ok, socket}
   end
@@ -26,9 +43,45 @@ defmodule SpacegameWeb.EyeBallPaulObserverLive do
     PageView.render("eyeballpaulobserver.html", assigns)
   end
 
-  def handle_info({Chat, :set_deg, deg}, socket) do
-    IO.inspect("handle_info: set_deg")
-    IO.inspect(deg)
+  def handle_info({:connecting, id: id}, socket) do
+    _players = %{}
+    _teams = %{1 => [], 2 => []}
+    _size = 20
+
+    Phoenix.PubSub.broadcast(
+      Spacegame.PubSub,
+      "EyeBallPaulController",
+      {:connected, id: id, team: 1}
+    )
+
+    {:noreply, socket}
+  end
+
+  def handle_info({:set_deg, deg: deg}, socket) do
+    IO.inspect(socket.id <> ": " <> deg)
+
+    socket =
+      socket
+      |> assign(paddles: [get_paddle(deg, 20, 1)])
+
+    {:noreply, socket}
+  end
+
+  def set_ball_pos(socket) do
+    # %{
+    #   x: socket.assigns.ball.x + 10,
+    #   y: socket.assigns.ball.y
+    # }
+
+    socket =
+      socket
+      |> assign(%{
+        ball: %{
+          x: socket.assigns.ball.x + 10,
+          y: socket.assigns.ball.y
+        }
+      })
+
     {:noreply, socket}
   end
 

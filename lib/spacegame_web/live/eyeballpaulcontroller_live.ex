@@ -4,12 +4,20 @@ defmodule SpacegameWeb.EyeBallPaulControllerLive do
   alias SpacegameWeb.PageView
 
   alias Spacegame.Chat
+  alias Phoenix.PubSub
 
   def mount(_session, socket) do
+    if connected?(socket), do: PubSub.subscribe(Spacegame.PubSub, "EyeBallPaulController")
+
+    Phoenix.PubSub.broadcast(
+      Spacegame.PubSub,
+      "EyeBallPaulObserver",
+      {:connecting, id: socket.id}
+    )
+
     socket =
       socket
-      |> assign(%{team_id: 1})
-      |> assign(%{deg: 180})
+      |> assign(%{team: 0})
 
     {:ok, socket}
   end
@@ -21,10 +29,15 @@ defmodule SpacegameWeb.EyeBallPaulControllerLive do
   def handle_event("set_deg", %{"controller" => %{"deg" => deg}}, socket) do
     Phoenix.PubSub.broadcast(
       Spacegame.PubSub,
-      "Spacegame.Chat",
-      {Spacegame.Chat, :set_deg, %{player: 1, deg: deg}}
+      "EyeBallPaulObserver",
+      {:set_deg, deg: deg}
     )
 
+    {:noreply, socket}
+  end
+
+  def handle_info({:connected, id: id, team: team}, socket) do
+    socket = if id == socket.id, do: assign(socket, %{team: team}), else: socket
     {:noreply, socket}
   end
 end
