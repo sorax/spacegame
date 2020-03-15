@@ -14,9 +14,9 @@ config :spacegame,
 config :spacegame, SpacegameWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "hwNMMnNu/lKKojvb9kv7uHX+uV5K+M9BeucUcErD8O26b7l50mQn7rJqpy9ydZtR",
-  live_view: [signing_salt: "WwiyxgTaekNS8eUuqsngVdOyvEJC0psN"],
   render_errors: [view: SpacegameWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Spacegame.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Spacegame.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [signing_salt: "WwiyxgTaekNS8eUuqsngVdOyvEJC0psN"]
 
 # Configures Elixir's Logger
 config :logger, :console,

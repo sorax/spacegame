@@ -1,3 +1,12 @@
+<div>
+  <%= live_render(@conn, SpacegameWeb.EyeballpaulobserverLive) %>
+
+  <%= live_render(@conn, SpacegameWeb.EyeballpaulcontrollerLive) %>
+
+  <%= live_render(@conn, SpacegameWeb.EyeballpaullogLive) %>
+</div>
+
+
 <div class="container">
   <div class="row">
     <div class="col-12">

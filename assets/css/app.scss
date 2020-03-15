@@ -1,7 +1,6 @@
-@import '../../deps/phoenix_live_view/assets/css/live_view.css';
+/* This file is for your main application css. */
 // @import './phoenix.css';
-
 @import '_alert';
-@import '_controller';
-@import '_observer';
+@import '../../deps/phoenix_live_view/assets/css/live_view.css';
+
 @import '~bootstrap/scss/bootstrap';
