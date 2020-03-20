@@ -1,4 +1,5 @@
 <div id="controller">
+  <div><%= @id %> | <%= @team %></div>
   <%= f = form_for :controller, "#", [phx_change: :set_deg, id: "controller_form"] %>
     <%= range_input f, :deg, [class: "team#{@team}", min: 0, max: 359, step: 1] %>
   </form>

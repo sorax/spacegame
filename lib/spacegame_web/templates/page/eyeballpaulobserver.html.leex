@@ -1,3 +1,10 @@
 <div id="observer">
-  OBSERVER
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet" width="100%" height="100%">
+      <!--<rect x="-50" y="-50" width="100" height="100" style="fill:white;stroke:gray;stroke-width:1" />-->
+      <circle cx="0" cy="0" r="50" style="fill:none;stroke:gray;stroke-width:1" />      
+      <circle cx="<%= @ball.x %>" cy="<%= @ball.y %>" r="5" fill="rgb(255,66,0)" />
+      <%= for paddle <- @paddles do %>
+        <path d="<%= paddle.d %>" style="fill:none;stroke:rgb(<%= paddle.color %>);stroke-width:5;stroke-linecap:round" />    
+      <% end %>
+  </svg>
 </div>
