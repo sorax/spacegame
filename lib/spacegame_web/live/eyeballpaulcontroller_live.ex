@@ -10,18 +10,24 @@ defmodule SpacegameWeb.EyeballpaulcontrollerLive do
     # if connected?(socket), do: :timer.send_interval(30000, self(), :update)
 
     socket
+    |> assign(:id, socket.id)
     |> assign(:team, 0)
     |> tuplify(:ok)
   end
 
-  # def handle_event("set_deg", %{"controller" => %{"deg" => deg}}, socket) do
-  #   # IO.inspect(socket.id)
+  def handle_event("set_deg", %{"controller" => %{"deg" => deg}}, socket) do
+    # IO.inspect(socket.id)
+    # IO.inspect(deg)
 
-  #   Phoenix.PubSub.broadcast(Spacegame.PubSub, "Eyeballpaul", {:set_deg, %{deg: deg}})
+    Phoenix.PubSub.broadcast(
+      Spacegame.PubSub,
+      "Eyeballpaul",
+      {:set_deg, %{deg: String.to_integer(deg), id: socket.id}}
+    )
 
-  #   socket
-  #   |> tuplify(:noreply)
-  # end
+    socket
+    |> tuplify(:noreply)
+  end
 
   # def handle_info(:tick, socket) do
   #   socket
