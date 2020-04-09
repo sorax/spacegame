@@ -15,12 +15,12 @@ jobs:
         os: [ubuntu-latest]
         otp: [22.x]
         elixir: [1.10.x]
-        postgres: [postgres:11]
+        postgres: [11]
         node: [13.x]
 
     services:
       db:
-        image: ${{ matrix.postgres }}
+        image: postgres:${{ matrix.postgres }}
         ports: ['5432:5432']
         options: >-
           --health-cmd pg_isready
