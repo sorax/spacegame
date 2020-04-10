@@ -25,7 +25,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
+          POSTGRES_DB: spacegame_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -39,9 +39,31 @@ jobs:
         with:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      #- uses: actions/cache@v1
+      #  id: deps-cache
+      #  with:
+      #    path: deps
+      #    key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+
+      #- uses: actions/cache@v1
+      #  id: build-cache
+      #  with:
+      #    path: _build
+      #    key: ${{ runner.os }}-build-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+
       - name: Install Dependencies
         run: mix deps.get
-      #- name: npm
-      #  run: npm ci --prefix assets
+      - name: npm
+        run: |
+          npm ci --prefix assets
+          npm run deploy --prefix ./assets
+          mkdir -p priv/static && mix phx.digest
+      #- name: Check format
+      #  run: mix format --check-formatted
       - name: Run Tests
         run: mix test
