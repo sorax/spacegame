@@ -67,7 +67,14 @@ jobs:
       - name: Run Tests
         run: mix test
       - name: Build release
-        run: MIX_ENV=prod mix release
+        run: mix release
+        #run: MIX_ENV=prod mix release
+        #env:
+        #  DATABASE_URL: ecto://USER:PASS@HOST/DATABASE
+        #  POOL_SIZE: 10
+        #  SECRET_KEY_BASE:
+        #  PORT: 80
+        #  #PORT: 443
       - name: zip release
         run: zip -r release.zip .
       - name: Create Release
