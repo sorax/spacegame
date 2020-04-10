@@ -57,7 +57,7 @@ jobs:
       #    key: ${{ runner.os }}-build-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
 
       - name: Install Dependencies
-        run: mix deps.get
+        run: mix deps.get --only prod
       - name: npm
         run: |
           npm ci --prefix assets
@@ -66,4 +66,4 @@ jobs:
       - name: Run Tests
         run: mix test
       - name: Release
-        run: mix release
+        run: MIX_ENV=prod mix release
