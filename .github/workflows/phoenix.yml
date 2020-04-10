@@ -76,7 +76,8 @@ jobs:
         #  PORT: 80
         #  #PORT: 443
       - name: zip release
-        run: zip -r release.zip .
+        #run: zip -r release.zip ./_build/dev/rel/spacegame/bin/spacegame
+        run: zip -r release.zip _build/dev
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
