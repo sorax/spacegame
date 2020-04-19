@@ -4,12 +4,9 @@ on:
   push:
     tags:
       - 'v*'
-  #   branches: [master]
-  # pull_request:
-  #   branches: [master]
 
 jobs:
-  build:
+  release:
     name: OTP ${{ matrix.otp }} | Elixir ${{ matrix.elixir }} | Node ${{ matrix.node }} | OS ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -36,40 +33,58 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Setup elixir
+
+      - name: Setup Elixir
         uses: actions/setup-elixir@v1
         with:
           otp-version: ${{ matrix.otp }}
           elixir-version: ${{ matrix.elixir }}
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
 
-      #- uses: actions/cache@v1
-      #  id: deps-cache
-      #  with:
-      #    path: deps
-      #    key: ${{ runner.os }}-mix-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+      - name: Cache deps
+        uses: actions/cache@v1
+        with:
+          path: deps
+          key: ${{ runner.os }}-deps-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-deps-
 
-      #- uses: actions/cache@v1
-      #  id: build-cache
-      #  with:
-      #    path: _build
-      #    key: ${{ runner.os }}-build-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+      - name: Cache _build
+        uses: actions/cache@v1
+        with:
+          path: _build
+          key: ${{ runner.os }}-build-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+
+      - name: Cache npm
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles(format('{0}{1}', github.workspace, '/assets/package-lock.json')) }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
 
       - name: Install Dependencies
         #run: mix deps.get --only prod
         run: mix deps.get
+
       - name: npm
         run: |
           npm ci --prefix assets
           npm run deploy --prefix ./assets
           mkdir -p priv/static && mix phx.digest
+
       - name: Run Tests
         run: mix test
-      - name: Build release
+
+      - name: Build Release
         run: mix release
+
         #run: MIX_ENV=prod mix release
         #env:
         #  DATABASE_URL: ecto://USER:PASS@HOST/DATABASE
@@ -77,9 +92,9 @@ jobs:
         #  SECRET_KEY_BASE:
         #  PORT: 80
         #  #PORT: 443
-      - name: zip release
-        #run: zip -r release.zip ./_build/dev/rel/spacegame/bin/spacegame
-        run: zip -r release.zip _build/dev
+      - name: Zip Release
+        run: zip -r release.zip _build
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -90,8 +105,9 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+
       - name: Upload Release Asset
-        id: upload-release-asset
+        #id: upload_release_asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
