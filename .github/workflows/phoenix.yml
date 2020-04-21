@@ -2,8 +2,9 @@ name: Phoenix CI
 
 on:
   push:
-    tags:
-      - 'v*'
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
   release:
@@ -33,6 +34,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: jaliborc/action-general-autotag@1.0.0
+        id: autotag
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}'
+          source_file: 'mix.exs'
+          extraction_regex: 'version:\\s\"([\\d\\.]+)\"'
+          tag_format: 'v{version}'
 
       - name: Setup Elixir
         uses: actions/setup-elixir@v1
@@ -104,8 +113,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: ${{ steps.autotag.outputs.version }}
+          release_name: ${{ steps.autotag.outputs.version }}
           draft: false
           prerelease: false
 
