@@ -52,6 +52,18 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}'
           source_file: 'mix.exs'
           extraction_regex: 'version:\s"([\d\.]+)"'
+          tag_format: 'v{version}'
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.autotag.outputs.version }}
+          release_name: v${{ steps.autotag.outputs.version }}
+          draft: false
+          prerelease: false
 
       # - name: Cache deps
       #   uses: actions/cache@v1
@@ -105,17 +117,6 @@ jobs:
 
       - name: Zip static
         run: zip -r static.zip priv/static
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.autotag.outputs.version }}
-          release_name: v${{ steps.autotag.outputs.version }}
-          draft: false
-          prerelease: false
 
       - name: Upload Release
         uses: actions/upload-release-asset@v1
