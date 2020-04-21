@@ -35,14 +35,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: jaliborc/action-general-autotag@1.0.0
-        id: autotag
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}'
-          source_file: 'mix.exs'
-          extraction_regex: 'version:\\s\"([\\d\\.]+)\"'
-          tag_format: 'v{version}'
-
       - name: Setup Elixir
         uses: actions/setup-elixir@v1
         with:
@@ -53,6 +45,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+
+      - uses: jaliborc/action-general-autotag@1.0.0
+        id: autotag
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}'
+          source_file: 'mix.exs'
+          extraction_regex: 'version:\s"([\d\.]+)"'
+          tag_format: 'v{version}'
 
       # - name: Cache deps
       #   uses: actions/cache@v1
