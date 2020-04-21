@@ -18,6 +18,7 @@ defmodule SpacegameWeb.EyeballpaulcontrollerLive do
   def handle_event("set_deg", %{"controller" => %{"deg" => deg}}, socket) do
     # IO.inspect(socket.id)
     # IO.inspect(deg)
+    #
 
     Phoenix.PubSub.broadcast(
       Spacegame.PubSub,
