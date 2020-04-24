@@ -7,7 +7,7 @@ defmodule SpacegameWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_spacegame_key",
-    signing_salt: "6wMVDd19"
+    signing_salt: "75vMD2yE"
   ]
 
   socket "/socket", SpacegameWeb.UserSocket,
@@ -32,7 +32,12 @@ defmodule SpacegameWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :spacegame
   end
+
+  plug Phoenix.LiveDashboard.RequestLogger,
+    param_key: "request_logger",
+    cookie_key: "request_logger"
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]

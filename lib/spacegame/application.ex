@@ -6,14 +6,17 @@ defmodule Spacegame.Application do
   use Application
 
   def start(_type, _args) do
-    # List all child processes to be supervised
     children = [
       # Start the Ecto repository
       Spacegame.Repo,
-      # Start the endpoint when the application starts
+      # Start the Telemetry supervisor
+      SpacegameWeb.Telemetry,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: Spacegame.PubSub},
+      # Start the Endpoint (http/https)
       SpacegameWeb.Endpoint
-      # Starts a worker by calling: Spacegame.Worker.start_link(arg)
-      # {Spacegame.Worker, arg},
+      # Start a worker by calling: Spacegame.Worker.start_link(arg)
+      # {Spacegame.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

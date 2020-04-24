@@ -13,10 +13,10 @@ config :spacegame,
 # Configures the endpoint
 config :spacegame, SpacegameWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "hwNMMnNu/lKKojvb9kv7uHX+uV5K+M9BeucUcErD8O26b7l50mQn7rJqpy9ydZtR",
-  render_errors: [view: SpacegameWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Spacegame.PubSub, adapter: Phoenix.PubSub.PG2],
-  live_view: [signing_salt: "WwiyxgTaekNS8eUuqsngVdOyvEJC0psN"]
+  secret_key_base: "0oDiZhKnS5j43SN6k8ivmfiA4T5C3GxpqdgCsWUpDsQEh7yb0H2gGf6mn4PFCIVV",
+  render_errors: [view: SpacegameWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Spacegame.PubSub,
+  live_view: [signing_salt: "U18Qq7hF"]
 
 # Configures Elixir's Logger
 config :logger, :console,
