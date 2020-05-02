@@ -1,0 +1,139 @@
+name: Phoenix CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  release:
+    name: OTP ${{ matrix.otp }} | Elixir ${{ matrix.elixir }} | Node ${{ matrix.node }} | OS ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        otp: [22.x]
+        elixir: [1.10.x]
+        postgres: [11]
+        node: [13.x]
+
+    services:
+      postgres:
+        image: postgres:${{ matrix.postgres }}
+        ports: ['5432:5432']
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: spacegame_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Elixir
+        uses: actions/setup-elixir@v1
+        with:
+          otp-version: ${{ matrix.otp }}
+          elixir-version: ${{ matrix.elixir }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - uses: jaliborc/action-general-autotag@1.0.0
+        id: autotag
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}'
+          source_file: 'mix.exs'
+          extraction_regex: 'version:\s"([\d\.]+)"'
+          tag_format: 'v{version}'
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.autotag.outputs.version }}
+          release_name: v${{ steps.autotag.outputs.version }}
+          draft: false
+          prerelease: false
+
+      # - name: Cache deps
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: deps
+      #     key: ${{ runner.os }}-deps-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-deps-
+
+      # - name: Cache _build
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: _build
+      #     key: ${{ runner.os }}-build-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles(format('{0}{1}', github.workspace, '/mix.lock')) }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-
+
+      # - name: Cache npm
+      #   uses: actions/cache@v1
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-npm-${{ matrix.node }}-${{ hashFiles(format('{0}{1}', github.workspace, '/assets/package-lock.json')) }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-npm-
+
+      - name: Install Dependencies
+        #run: mix deps.get --only prod
+        run: mix deps.get
+
+      - name: npm
+        run: |
+          npm ci --prefix assets
+          npm run deploy --prefix ./assets
+          mix phx.digest
+
+      - name: Run Tests
+        run: mix test
+
+      - name: Build Release
+        run: mix release
+
+        #run: MIX_ENV=prod mix release
+        #env:
+        #  DATABASE_URL: ecto://USER:PASS@HOST/DATABASE
+        #  POOL_SIZE: 10
+        #  SECRET_KEY_BASE:
+        #  PORT: 80
+        #  #PORT: 443
+      - name: Zip Release
+        run: zip -r release.zip _build
+
+      - name: Zip static
+        run: zip -r static.zip priv/static
+
+      - name: Upload Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./release.zip
+          asset_name: release.zip
+          asset_content_type: application/zip
+
+      - name: Upload static
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./static.zip
+          asset_name: static.zip
+          asset_content_type: application/zip
