@@ -18,6 +18,9 @@ defmodule SpacegameWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+
+    live "/ebp/controller", EbpcontrollerLive, :index
+    live "/ebp/observer", EbpobserverLive, :index
   end
 
   # Other scopes may use custom stacks.
