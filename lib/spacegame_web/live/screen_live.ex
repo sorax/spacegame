@@ -1,4 +1,4 @@
-defmodule SpacegameWeb.EbpobserverLive do
+defmodule SpacegameWeb.ScreenLive do
   use SpacegameWeb, :live_view
 
   @impl true

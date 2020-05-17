@@ -1,4 +1,4 @@
-defmodule SpacegameWeb.EbpcontrollerLive do
+defmodule SpacegameWeb.ControllerLive do
   use SpacegameWeb, :live_view
 
   @impl true

@@ -19,8 +19,8 @@ defmodule SpacegameWeb.Router do
 
     live "/", PageLive, :index
 
-    live "/ebp/controller", EbpcontrollerLive, :index
-    live "/ebp/observer", EbpobserverLive, :index
+    live "/controller", ControllerLive, :index
+    live "/screen", ScreenLive, :index
   end
 
   # Other scopes may use custom stacks.
