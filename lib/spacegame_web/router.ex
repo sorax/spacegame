@@ -23,8 +23,11 @@ defmodule SpacegameWeb.Router do
   scope "/eyeballpaul", SpacegameWeb do
     pipe_through :browser
 
-    live "/controller", Eyeballpaul.ControllerLive, :index
+    live "/controller", Eyeballpaul.ControllerLive, :index,
+      layout: {SpacegameWeb.Eyeballpaul.LayoutView, "live.html"}
+
     live "/screen", Eyeballpaul.ScreenLive, :index
+    # layout: {SpacegameWeb.Eyeballpaul.LayoutView, :root}
   end
 
   # Other scopes may use custom stacks.
