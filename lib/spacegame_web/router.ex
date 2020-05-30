@@ -18,9 +18,13 @@ defmodule SpacegameWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+  end
 
-    live "/controller", ControllerLive, :index
-    live "/screen", ScreenLive, :index
+  scope "/eyeballpaul", SpacegameWeb do
+    pipe_through :browser
+
+    live "/controller", Eyeballpaul.ControllerLive, :index
+    live "/screen", Eyeballpaul.ScreenLive, :index
   end
 
   # Other scopes may use custom stacks.
